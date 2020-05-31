@@ -367,7 +367,7 @@ public class DataBaseHelper extends SQLiteAssetHelper {
         return success;
     }
 
-    public File writeTXTFile(String dni_supervisor) {
+    public File writeTXTFile(String imi) {
         try {
             SQLiteDatabase db = this.getReadableDatabase();
             String query = "SELECT \n" +
@@ -423,7 +423,8 @@ public class DataBaseHelper extends SQLiteAssetHelper {
             stringBuilder.append("\t");
             stringBuilder.append("QR");
             stringBuilder.append("\t");
-
+            stringBuilder.append("IMI");
+            stringBuilder.append("\t");
             stringBuilder.append("\n");
             int i = 1;
             if (cur.moveToFirst()) {
@@ -482,6 +483,8 @@ public class DataBaseHelper extends SQLiteAssetHelper {
                         //QR
                         stringBuilder.append(cur.getString(14).trim());
                     String c = cur.getString(14).trim();
+                    stringBuilder.append("\t");
+                    stringBuilder.append(imi);
                     stringBuilder.append("\n");
 
 
@@ -500,7 +503,7 @@ public class DataBaseHelper extends SQLiteAssetHelper {
             SimpleDateFormat formatterHour = new SimpleDateFormat("HH:mm:ss");
             SimpleDateFormat formatterDate = new SimpleDateFormat("yyyy-MM-dd");
             String fileName = formatterHour.format(new Date()) + name + formatterDate.format(new Date());
-            File file = new File(extStorageDirectory, "personal/" + fileName + ".txt");
+            File file = new File(extStorageDirectory, "archivostextoagro/" + fileName + ".txt");
 
             writeToFile(stringBuilder.toString().getBytes(), file);
             return file;
@@ -804,6 +807,7 @@ public class DataBaseHelper extends SQLiteAssetHelper {
                 "I.nro_arbol as 'nro_arbol',\n" +
                 "I.observaciones as 'obsevaciones',\n" +
                 "I.id_clon as 'id_clon',\n" +
+                "C.descripcion as 'clon',\n" +
                 "I.id_usuario as 'id_usuario',\n" +
                 "I.fechaauditoria as 'fechaauditoria',\n" +
                 "I.QR\n" +
@@ -838,9 +842,10 @@ public class DataBaseHelper extends SQLiteAssetHelper {
                 record.nro_arbol = cur.getString(14);
                 record.observaciones = cur.getString(15);
                 record.id_clon = cur.getString(16);
-                record.id_usuario = cur.getString(17);
-                record.fechaauditoria = cur.getString(18);
-                record.qr = cur.getString(19);
+                record.clon = cur.getString(17);
+                record.id_usuario = cur.getString(18);
+                record.fechaauditoria = cur.getString(19);
+                record.qr = cur.getString(20);
 
                 object.add(record);
             } while (cur.moveToNext());
@@ -925,9 +930,9 @@ public class DataBaseHelper extends SQLiteAssetHelper {
     }
 
     //MIO
-    public void insertMapeo2(String fecha, String dt, String id_zonatrabajo,String id_estadofisico,
-                             String nroLinea, String id_estadosanitario,
-                             String nroArbol, String id_condicion,String id_estadositio, String edad,
+    public void insertMapeo2(String fecha, float dt, String id_zonatrabajo,String id_estadofisico,
+                             int nroLinea, String id_estadosanitario,
+                             int nroArbol, String id_condicion,String id_estadositio, float edad,
                              String id_clon, String observacion,String qr) {
         SQLiteDatabase db = getWritableDatabase();
 
@@ -962,12 +967,12 @@ public class DataBaseHelper extends SQLiteAssetHelper {
         ContentValues nuevoRegistro = new ContentValues();
         nuevoRegistro.put("fecha", fecha);
         nuevoRegistro.put("id_zonatrabajo", id_zonatrabajo);
-        nuevoRegistro.put("linea", Integer.parseInt(nroLinea));
+        nuevoRegistro.put("linea", nroLinea);
         nuevoRegistro.put("id_clon", id_clon);
-        nuevoRegistro.put("nro_arbol ", Integer.parseInt(nroArbol));
+        nuevoRegistro.put("nro_arbol ", nroArbol);
         nuevoRegistro.put("id_condicion", id_condicion);
-        nuevoRegistro.put("id_edad", Float.parseFloat(edad));
-        nuevoRegistro.put("dt", Float.parseFloat(dt));
+        nuevoRegistro.put("id_edad", 0);
+        nuevoRegistro.put("dt", dt);
         nuevoRegistro.put("id_estadofisico", id_estadofisico);
         nuevoRegistro.put("id_estadosanitario", id_estadosanitario);
         nuevoRegistro.put("id_estadositio", id_estadositio);
@@ -1011,20 +1016,20 @@ public class DataBaseHelper extends SQLiteAssetHelper {
         db.update("COSTOS", nuevoRegistro, "id_costo =" + id_costo, null);
     }
 
-    public void updateMapeo2(String id_IP,String fecha, String dt, String id_zonatrabajo,String id_estadofisico,
-                             String nroLinea, String id_estadosanitario,
-                             String nroArbol, String id_condicion,String id_estadositio, String edad,
+    public void updateMapeo2(String id_IP,String fecha, float dt, String id_zonatrabajo,String id_estadofisico,
+                             int nroLinea, String id_estadosanitario,
+                             int nroArbol, String id_condicion,String id_estadositio, float edad,
                              String id_clon, String observacion,String qr) {
         SQLiteDatabase db = getWritableDatabase();
         ContentValues nuevoRegistro = new ContentValues();
         nuevoRegistro.put("fecha", fecha);
         nuevoRegistro.put("id_zonatrabajo", id_zonatrabajo);
-        nuevoRegistro.put("linea", Integer.parseInt(nroLinea));
+        nuevoRegistro.put("linea", nroLinea);
         nuevoRegistro.put("id_clon", id_clon);
-        nuevoRegistro.put("nro_arbol ", Integer.parseInt(nroArbol));
+        nuevoRegistro.put("nro_arbol ", nroArbol);
         nuevoRegistro.put("id_condicion", id_condicion);
-        nuevoRegistro.put("id_edad", Float.parseFloat(edad));
-        nuevoRegistro.put("dt", Float.parseFloat(dt));
+        nuevoRegistro.put("id_edad", 0);
+        nuevoRegistro.put("dt", dt);
         nuevoRegistro.put("id_estadofisico", id_estadofisico);
         nuevoRegistro.put("id_estadosanitario", id_estadosanitario);
         nuevoRegistro.put("id_estadositio", id_estadositio);

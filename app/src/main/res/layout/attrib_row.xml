@@ -9,16 +9,7 @@
         android:textStyle="bold" />
 
     <TextView
-        android:id="@+id/tdDate"
-        android:layout_width="0dp"
-        android:layout_weight="0"
-        android:gravity="center"
-        android:textSize="0dp"
-        android:textStyle="bold" />
-
-
-    <TextView
-        android:id="@+id/tdPersonal"
+        android:id="@+id/tdZonaTrabajo"
         android:layout_width="0dp"
         android:layout_weight="0.6"
         android:gravity="center"
@@ -26,15 +17,16 @@
         android:textStyle="bold" />
 
     <TextView
-        android:id="@+id/tdIdPersonal"
+        android:id="@+id/tdZonaTrabajo2"
         android:layout_width="0dp"
-        android:layout_weight="0"
+        android:layout_weight="0.6"
         android:gravity="center"
-        android:textSize="0dp"
+        android:textSize="14dp"
+        android:visibility="gone"
         android:textStyle="bold" />
 
     <TextView
-        android:id="@+id/tdWorkerZone"
+        android:id="@+id/tdEstadoFisico"
         android:layout_width="0dp"
         android:layout_weight="0.6"
         android:gravity="center"
@@ -42,16 +34,16 @@
         android:textStyle="bold" />
 
     <TextView
-        android:id="@+id/tdIdWorkerZone"
+        android:id="@+id/tdEstadoFisico2"
         android:layout_width="0dp"
-        android:layout_weight="0"
+        android:layout_weight="0.6"
         android:gravity="center"
-        android:textSize="0dp"
+        android:textSize="14dp"
+        android:visibility="gone"
         android:textStyle="bold" />
 
-
     <TextView
-        android:id="@+id/tdActivity"
+        android:id="@+id/tdEstadoSanitario"
         android:layout_width="0dp"
         android:layout_weight="0.6"
         android:gravity="center"
@@ -59,16 +51,16 @@
         android:textStyle="bold" />
 
     <TextView
-        android:id="@+id/tdIdActivity"
+        android:id="@+id/tdEstadoSanitario2"
         android:layout_width="0dp"
-        android:layout_weight="0"
+        android:layout_weight="0.6"
         android:gravity="center"
-        android:textSize="0dp"
+        android:visibility="gone"
+        android:textSize="14dp"
         android:textStyle="bold" />
 
-
     <TextView
-        android:id="@+id/tdHour"
+        android:id="@+id/tdEstadoSitio"
         android:layout_width="0dp"
         android:layout_weight="0.6"
         android:gravity="center"
@@ -76,11 +68,75 @@
         android:textStyle="bold" />
 
     <TextView
-        android:id="@+id/tdAdvance"
+        android:id="@+id/tdEstadoSitio2"
+        android:layout_width="0dp"
+        android:layout_weight="0.6"
+        android:gravity="center"
+        android:visibility="gone"
+        android:textSize="14dp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/tdCondicion"
         android:layout_width="0dp"
         android:layout_weight="0.6"
         android:gravity="center"
         android:textSize="14dp"
+        android:textStyle="bold" />
+
+
+    <TextView
+        android:id="@+id/id_clone_x"
+        android:layout_width="0dp"
+        android:layout_weight="0.6"
+        android:gravity="center"
+        android:textSize="14dp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/id_edad_x"
+        android:layout_width="0dp"
+        android:layout_weight="0.6"
+        android:gravity="center"
+        android:textSize="14dp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/linea_x"
+        android:layout_width="0dp"
+        android:layout_weight="0.6"
+        android:gravity="center"
+        android:textSize="14dp"
+        android:textStyle="bold" />
+    <TextView
+        android:id="@+id/nro_arbol_x"
+        android:layout_width="0dp"
+        android:layout_weight="0.6"
+        android:gravity="center"
+        android:textSize="14dp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/dt_x"
+        android:layout_width="0dp"
+        android:layout_weight="0.6"
+        android:gravity="center"
+        android:textSize="14dp"
+        android:textStyle="bold" />
+    <TextView
+        android:id="@+id/observaciones_x"
+        android:layout_width="0dp"
+        android:layout_weight="0.6"
+        android:gravity="center"
+        android:textSize="14dp"
+        android:textStyle="bold" />
+    <TextView
+        android:id="@+id/fechaauditoria_x"
+        android:layout_width="0dp"
+        android:layout_weight="0.6"
+        android:gravity="center"
+        android:textSize="14dp"
+        android:visibility="gone"
         android:textStyle="bold" />
 
     <TextView
@@ -88,55 +144,6 @@
         android:layout_width="0dp"
         android:layout_weight="0.6"
         android:gravity="center"
-        android:textStyle="bold" />
-    <TextView
-        android:id="@+id/id_clone_x"
-        android:layout_width="0dp"
-        android:layout_weight="0.6"
-        android:gravity="center"
-        android:visibility="gone"
-        android:textStyle="bold" />
-    <TextView
-        android:id="@+id/linea_x"
-        android:layout_width="0dp"
-        android:layout_weight="0.6"
-        android:gravity="center"
-        android:visibility="gone"
-        android:textStyle="bold" />
-    <TextView
-        android:id="@+id/nro_arbol_x"
-        android:layout_width="0dp"
-        android:layout_weight="0.6"
-        android:gravity="center"
-        android:visibility="gone"
-        android:textStyle="bold" />
-    <TextView
-        android:id="@+id/id_edad_x"
-        android:layout_width="0dp"
-        android:layout_weight="0.6"
-        android:gravity="center"
-        android:visibility="gone"
-        android:textStyle="bold" />
-    <TextView
-        android:id="@+id/dt_x"
-        android:layout_width="0dp"
-        android:layout_weight="0.6"
-        android:gravity="center"
-        android:visibility="gone"
-        android:textStyle="bold" />
-    <TextView
-        android:id="@+id/observaciones_x"
-        android:layout_width="0dp"
-        android:layout_weight="0.6"
-        android:gravity="center"
-        android:visibility="gone"
-        android:textStyle="bold" />
-    <TextView
-        android:id="@+id/fechaauditoria_x"
-        android:layout_width="0dp"
-        android:layout_weight="0.6"
-        android:gravity="center"
-        android:visibility="gone"
         android:textStyle="bold" />
 
 </TableRow>
