@@ -46,6 +46,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 import java.util.UUID;
+import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import okhttp3.MediaType;
@@ -195,7 +196,7 @@ public class MainActivity extends AppCompatActivity {
 
                 if (workers.size() > 0) {
                     if (!(i == 0)) {
-                        int pos = i - 1;
+                        int pos = i;
                         id_personal = workers.get(pos).id;
                         personal = workers.get(pos).descripcion;
                     }
@@ -219,7 +220,7 @@ public class MainActivity extends AppCompatActivity {
 
                 if (listCondicion.size() > 0) {
                     if (!(i == 0)) {
-                        int pos = i - 1;
+                        int pos = i;
                         id_condicion = listCondicion.get(pos).id;
                         descripcion_condicion = listCondicion.get(pos).descripcion;
                     }
@@ -243,7 +244,7 @@ public class MainActivity extends AppCompatActivity {
 
                 if (listClon.size() > 0) {
                     if (!(i == 0)) {
-                        int pos = i - 1;
+                        int pos = i;
                         id_clon = listClon.get(pos).id;
                         decripcion_clon = listClon.get(pos).descripcion;
                     }
@@ -267,7 +268,7 @@ public class MainActivity extends AppCompatActivity {
 
                 if (listEstadoFisico.size() > 0) {
                     if (!(i == 0)) {
-                        int pos = i - 1;
+                        int pos = i;
                         id_estadofisico = listEstadoFisico.get(pos).id;
                         descripcion_estadofisico = listEstadoFisico.get(pos).descripcion;
                     }
@@ -291,7 +292,7 @@ public class MainActivity extends AppCompatActivity {
 
                 if (listEstadoSanitario.size() > 0) {
                     if (!(i == 0)) {
-                        int pos = i - 1;
+                        int pos = i;
                         id_estadosanitario = listEstadoSanitario.get(pos).id;
                         descripcion_estadosanitario = listEstadoSanitario.get(pos).descripcion;
                     }
@@ -315,7 +316,7 @@ public class MainActivity extends AppCompatActivity {
 
                 if (listEstadoSitio.size() > 0) {
                     if (!(i == 0)) {
-                        int pos = i - 1;
+                        int pos = i;
                         id_estadositio = listEstadoSitio.get(pos).id;
                         descripcion_estadositio = listEstadoSitio.get(pos).descripcion;
                     }
@@ -339,7 +340,7 @@ public class MainActivity extends AppCompatActivity {
 
                 if (workerZone.size() > 0) {
                     if (!(i == 0)) {
-                        int pos = i - 1;
+                        int pos = i;
                         id_zonaTrabajo = workerZone.get(pos).id;
                         zonatrabajo = workerZone.get(pos).descripcion;
                     }
@@ -362,7 +363,7 @@ public class MainActivity extends AppCompatActivity {
 
                 if (activities.size() > 0) {
                     if (!(i == 0)) {
-                        int pos = i - 1;
+                        int pos = i;
                         id_actividad = activities.get(pos).id;
                         actividad = activities.get(pos).descripcion;
                     }
@@ -453,7 +454,8 @@ public class MainActivity extends AppCompatActivity {
                 if (txtObservacion.getText().toString().isEmpty()){
                     observacion = "";
                 }else {
-                    if(Pattern.matches("^[a-zA-Z1-9]*$", txtObservacion.getText().toString())){
+
+                    if(Pattern.matches("^[A-Za-z0-9\\s]+$",txtObservacion.getText().toString())){
                         observacion = txtObservacion.getText().toString();
                     }else {
                         MostrarDialogo("El campo observaciones no debe contener caracteres extraños");
@@ -625,7 +627,7 @@ public class MainActivity extends AppCompatActivity {
                     editor.putBoolean("firstLoad", false);
                     editor.apply();
                 } else {
-                    MostrarDialogo("Error al exportar");
+                    MostrarDialogo("No hay ningun dato que exportar");
                 }
 
             }
@@ -708,20 +710,48 @@ public class MainActivity extends AppCompatActivity {
         for (int i = 0; i < recordsInventario.size(); i++) {
             final TableRow row = (TableRow) LayoutInflater.from(MainActivity.this).inflate(R.layout.attrib_row, null);
             ((TextView) row.findViewById(R.id.tdId)).setText(String.valueOf(recordsInventario.get(i).id_IP));
-            ((TextView) row.findViewById(R.id.tdZonaTrabajo2)).setText(String.valueOf(recordsInventario.get(i).zonatrabajo));
             strZonaTrabajo = recordsInventario.get(i).zonatrabajo.replace(" ","");
-            ((TextView) row.findViewById(R.id.tdZonaTrabajo)).setText(strZonaTrabajo);
-            ((TextView) row.findViewById(R.id.tdEstadoFisico2)).setText(recordsInventario.get(i).estadofisico);
+            if (strZonaTrabajo.length() > 5){
+                ((TextView) row.findViewById(R.id.tdZonaTrabajo)).setText(strZonaTrabajo.substring(0,5));
+            }else {
+                ((TextView) row.findViewById(R.id.tdZonaTrabajo)).setText(recordsInventario.get(i).zonatrabajo);
+            }
+            ((TextView) row.findViewById(R.id.tdZonaTrabajo2)).setText(recordsInventario.get(i).zonatrabajo);
             strEstadoFisico = recordsInventario.get(i).estadofisico.replace(" ","");
-            ((TextView) row.findViewById(R.id.tdEstadoFisico)).setText(strEstadoFisico);
-            ((TextView) row.findViewById(R.id.tdEstadoSanitario2)).setText(recordsInventario.get(i).estadosanitario);
+            if (strEstadoFisico.length() > 5){
+                ((TextView) row.findViewById(R.id.tdEstadoFisico)).setText(strEstadoFisico.substring(0,5));
+            }else {
+                ((TextView) row.findViewById(R.id.tdEstadoFisico)).setText(recordsInventario.get(i).estadofisico);
+            }
+            ((TextView) row.findViewById(R.id.tdEstadoFisico2)).setText(recordsInventario.get(i).estadofisico);
             strEstadoSanitario = recordsInventario.get(i).estadosanitario.replace(" ","");
-            ((TextView) row.findViewById(R.id.tdEstadoSanitario)).setText(strEstadoSanitario);
-            ((TextView) row.findViewById(R.id.tdEstadoSitio2)).setText(recordsInventario.get(i).estadositio);
+            if (strEstadoSanitario.length()>5){
+                ((TextView) row.findViewById(R.id.tdEstadoSanitario)).setText(strEstadoSanitario.substring(0,5));
+            }else {
+                ((TextView) row.findViewById(R.id.tdEstadoSanitario)).setText(recordsInventario.get(i).estadosanitario);
+            }
+            ((TextView) row.findViewById(R.id.tdEstadoSanitario2)).setText(recordsInventario.get(i).estadosanitario);
             strEstadoSitio = recordsInventario.get(i).estadositio.replace(" ","");
-            ((TextView) row.findViewById(R.id.tdEstadoSitio)).setText(strEstadoSitio);
-            ((TextView) row.findViewById(R.id.tdCondicion)).setText(recordsInventario.get(i).condicion);
-            ((TextView) row.findViewById(R.id.id_clone_x)).setText(recordsInventario.get(i).clon);
+            if (strEstadoSitio.length()>5){
+                ((TextView) row.findViewById(R.id.tdEstadoSitio)).setText(strEstadoSitio.substring(0,5));
+            }else {
+                ((TextView) row.findViewById(R.id.tdEstadoSitio)).setText(recordsInventario.get(i).estadositio);
+            }
+            ((TextView) row.findViewById(R.id.tdEstadoSitio2)).setText(recordsInventario.get(i).estadositio);
+            strCondicion = recordsInventario.get(i).condicion.replace(" ","");
+            if (strCondicion.length() > 5){
+                ((TextView) row.findViewById(R.id.tdCondicion)).setText(strCondicion.substring(0,5));
+            }else {
+                ((TextView) row.findViewById(R.id.tdCondicion)).setText(recordsInventario.get(i).condicion);
+            }
+            ((TextView) row.findViewById(R.id.tdCondicion2)).setText(recordsInventario.get(i).condicion);
+            strClon = recordsInventario.get(i).clon.replace(" ","");
+            if (strClon.length() > 5){
+                ((TextView) row.findViewById(R.id.id_clone_x)).setText(strClon.substring(0,5));
+            }else {
+                ((TextView) row.findViewById(R.id.id_clone_x)).setText(recordsInventario.get(i).clon);
+            }
+            ((TextView) row.findViewById(R.id.id_clone_x2)).setText(recordsInventario.get(i).clon);
             ((TextView) row.findViewById(R.id.id_edad_x)).setText(recordsInventario.get(i).id_edad);
             ((TextView) row.findViewById(R.id.linea_x)).setText(recordsInventario.get(i).linea);
             ((TextView) row.findViewById(R.id.nro_arbol_x)).setText(recordsInventario.get(i).nro_arbol);
@@ -764,7 +794,7 @@ public class MainActivity extends AppCompatActivity {
 
                     if (current_idIP.equals(firstText)) {
                         current_idIP = "";
-                        selectRow("","","","","","","0", new Date().toString(), "0",
+                        selectRow("","","","","","","0", "", "0",
                                 "0", "0", "");
                         spClon.setSelection(0);
                         spWorkerZone.setSelection(0);
@@ -777,18 +807,18 @@ public class MainActivity extends AppCompatActivity {
 
                     current_idIP = firstText;
 
-                    selectRow(((TextView) t.getChildAt(14)).getText().toString(),
-                            ((TextView) t.getChildAt(12)).getText().toString(),
-                            ((TextView) t.getChildAt(13)).getText().toString(),
+                    selectRow(((TextView) t.getChildAt(16)).getText().toString(),
                             ((TextView) t.getChildAt(14)).getText().toString(),
                             ((TextView) t.getChildAt(15)).getText().toString(),
-                            ((TextView) t.getChildAt(10)).getText().toString(),
+                            ((TextView) t.getChildAt(13)).getText().toString(),
+                            ((TextView) t.getChildAt(17)).getText().toString(),
+                            ((TextView) t.getChildAt(12)).getText().toString(),
                             ((TextView) t.getChildAt(2)).getText().toString(),
                             ((TextView) t.getChildAt(4)).getText().toString(),
                             ((TextView) t.getChildAt(6)).getText().toString(),
                             ((TextView) t.getChildAt(8)).getText().toString(),
-                            ((TextView) t.getChildAt(9)).getText().toString(),
-                            ((TextView) t.getChildAt(17)).getText().toString());
+                            ((TextView) t.getChildAt(10)).getText().toString(),
+                            ((TextView) t.getChildAt(19)).getText().toString());
 
 //                    Toast.makeText(getApplicationContext(), "value was " + firstText,
 //                            Toast.LENGTH_LONG).show();

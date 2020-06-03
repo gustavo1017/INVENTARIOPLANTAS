@@ -390,45 +390,45 @@ public class DataBaseHelper extends SQLiteAssetHelper {
                     "\tWHERE I.deleted = 0";
 
             Cursor cur = db.rawQuery(query, null);
+            if (cur.getCount() > 0){
+                StringBuilder stringBuilder = new StringBuilder();
 
-            StringBuilder stringBuilder = new StringBuilder();
-
-            stringBuilder.append("Fecha");
-            stringBuilder.append("\t");
-            stringBuilder.append("ID_zonatrabajo");
-            stringBuilder.append("\t");
-            stringBuilder.append("linea");
-            stringBuilder.append("\t");
-            stringBuilder.append("ID_clon");
-            stringBuilder.append("\t");
-            stringBuilder.append("nro_arbol");
-            stringBuilder.append("\t");
-            stringBuilder.append("ID_condicion");
-            stringBuilder.append("\t");
-            stringBuilder.append("ID_edad");
-            stringBuilder.append("\t");
-            stringBuilder.append("DT");
-            stringBuilder.append("\t");
-            stringBuilder.append("ID_estadofisico");
-            stringBuilder.append("\t");
-            stringBuilder.append("ID_estadosanitario");
-            stringBuilder.append("\t");
-            stringBuilder.append("ID_estadositio");
-            stringBuilder.append("\t");
-            stringBuilder.append("Observaciones");
-            stringBuilder.append("\t");
-            stringBuilder.append("ID_usuario");
-            stringBuilder.append("\t");
-            stringBuilder.append("fechaauditoria");
-            stringBuilder.append("\t");
-            stringBuilder.append("QR");
-            stringBuilder.append("\t");
-            stringBuilder.append("IMI");
-            stringBuilder.append("\t");
-            stringBuilder.append("\n");
-            int i = 1;
-            if (cur.moveToFirst()) {
-                do {
+                stringBuilder.append("Fecha");
+                stringBuilder.append("\t");
+                stringBuilder.append("ID_zonatrabajo");
+                stringBuilder.append("\t");
+                stringBuilder.append("linea");
+                stringBuilder.append("\t");
+                stringBuilder.append("ID_clon");
+                stringBuilder.append("\t");
+                stringBuilder.append("nro_arbol");
+                stringBuilder.append("\t");
+                stringBuilder.append("ID_condicion");
+                stringBuilder.append("\t");
+                stringBuilder.append("ID_edad");
+                stringBuilder.append("\t");
+                stringBuilder.append("DT");
+                stringBuilder.append("\t");
+                stringBuilder.append("ID_estadofisico");
+                stringBuilder.append("\t");
+                stringBuilder.append("ID_estadosanitario");
+                stringBuilder.append("\t");
+                stringBuilder.append("ID_estadositio");
+                stringBuilder.append("\t");
+                stringBuilder.append("Observaciones");
+                stringBuilder.append("\t");
+                stringBuilder.append("ID_usuario");
+                stringBuilder.append("\t");
+                stringBuilder.append("fechaauditoria");
+                stringBuilder.append("\t");
+                stringBuilder.append("QR");
+                stringBuilder.append("\t");
+                stringBuilder.append("IMI");
+                stringBuilder.append("\t");
+                stringBuilder.append("\n");
+                int i = 1;
+                if (cur.moveToFirst()) {
+                    do {
 
 
 
@@ -449,64 +449,70 @@ public class DataBaseHelper extends SQLiteAssetHelper {
                         stringBuilder.append("\t");
                         //nro arbol
                         stringBuilder.append(cur.getString(4).trim());
-                    stringBuilder.append("\t");
+                        stringBuilder.append("\t");
                         //id_condicion
                         stringBuilder.append(cur.getString(5).trim());
-                    stringBuilder.append("\t");
+                        stringBuilder.append("\t");
                         //id_edad
                         stringBuilder.append(cur.getString(6).trim());
-                    stringBuilder.append("\t");
+                        stringBuilder.append("\t");
                         //dt
                         stringBuilder.append(cur.getString(7).trim());
-                    stringBuilder.append("\t");
+                        stringBuilder.append("\t");
                         //Estado fisico
                         stringBuilder.append(cur.getString(8).trim());
-                    stringBuilder.append("\t");
+                        stringBuilder.append("\t");
                         //Estado sanitario
                         stringBuilder.append(cur.getString(9).trim());
-                    stringBuilder.append("\t");
+                        stringBuilder.append("\t");
                         //estado sitio
                         stringBuilder.append(cur.getString(10).trim());
-                    stringBuilder.append("\t");
+                        stringBuilder.append("\t");
                         //observaciones
                         stringBuilder.append(cur.getString(11).trim());
                         String obser = cur.getString(11).trim();
-                    stringBuilder.append("\t");
+                        stringBuilder.append("\t");
                         //id_usuario
                         stringBuilder.append(cur.getString(12).trim());
-                    String a = cur.getString(12).trim();
-                    stringBuilder.append("\t");
+                        String a = cur.getString(12).trim();
+                        stringBuilder.append("\t");
                         //fecha auditoria
                         stringBuilder.append(cur.getString(13).trim());
-                    String b = cur.getString(13).trim();
-                    stringBuilder.append("\t");
+                        String b = cur.getString(13).trim();
+                        stringBuilder.append("\t");
                         //QR
                         stringBuilder.append(cur.getString(14).trim());
-                    String c = cur.getString(14).trim();
-                    stringBuilder.append("\t");
-                    stringBuilder.append(imi);
-                    stringBuilder.append("\n");
+                        String c = cur.getString(14).trim();
+                        stringBuilder.append("\t");
+                        stringBuilder.append(imi);
+                        stringBuilder.append("\n");
 
 
 
 
-                    i++;
-                } while (cur.moveToNext());
+                        i++;
+                    } while (cur.moveToNext());
+                }
+
+                cur.close();
+                db.close();
+
+                String extStorageDirectory = Environment.getExternalStorageDirectory().toString();
+                String name = "INVENTARIO";
+
+                SimpleDateFormat formatterHour = new SimpleDateFormat("HH:mm:ss");
+                String fechaSinPuntos = formatterHour.format(new Date());
+                String fechaFinal = fechaSinPuntos.replace(":","");
+                SimpleDateFormat formatterDate = new SimpleDateFormat("yyyy-MM-dd");
+                String fileName = fechaFinal + name + formatterDate.format(new Date());
+                File file = new File(extStorageDirectory, "archivostextoagro/" + fileName + ".txt");
+
+                writeToFile(stringBuilder.toString().getBytes(), file);
+                return file;
+            }else {
+                return null;
             }
 
-            cur.close();
-            db.close();
-
-            String extStorageDirectory = Environment.getExternalStorageDirectory().toString();
-            String name = "INVENTARIO";
-
-            SimpleDateFormat formatterHour = new SimpleDateFormat("HH:mm:ss");
-            SimpleDateFormat formatterDate = new SimpleDateFormat("yyyy-MM-dd");
-            String fileName = formatterHour.format(new Date()) + name + formatterDate.format(new Date());
-            File file = new File(extStorageDirectory, "archivostextoagro/" + fileName + ".txt");
-
-            writeToFile(stringBuilder.toString().getBytes(), file);
-            return file;
         } catch (Exception e) {
             e.printStackTrace();
             return null;
