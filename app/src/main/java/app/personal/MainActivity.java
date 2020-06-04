@@ -3,6 +3,7 @@ package app.personal;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
@@ -99,6 +100,8 @@ public class MainActivity extends AppCompatActivity {
     ArrayList<ObjectAgro> workerZone = new ArrayList<ObjectAgro>();
     ArrayList<ObjectAgro> activities = new ArrayList<ObjectAgro>();
 
+    Toolbar toolbar;
+
     float dt_local;
     float edad_local;
     int linea_local;
@@ -139,6 +142,10 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        toolbar = findViewById(R.id.toolbarCustom);
+        setSupportActionBar(toolbar);
+
         myDatabase = new DataBaseHelper(MainActivity.this);
 
         Bundle bundle = getIntent().getExtras();

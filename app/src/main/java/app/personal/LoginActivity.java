@@ -25,6 +25,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
+import androidx.appcompat.widget.Toolbar;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
@@ -57,6 +58,7 @@ public class LoginActivity extends AppCompatActivity {
 
     private static DownloadManager downloadManager;
     DataBaseHelper myDatabase;
+    Toolbar toolbar;
     private ProgressDialog progressDialog;
 
 
@@ -73,6 +75,10 @@ public class LoginActivity extends AppCompatActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+
+        toolbar = findViewById(R.id.toolbarCustom);
+        setSupportActionBar(toolbar);
+
         myDatabase = new DataBaseHelper(LoginActivity.this);
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);
